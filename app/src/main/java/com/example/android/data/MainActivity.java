@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.example.android.data.model.DataItem;
 
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     List<Sensor> sensorList;
-    String[] sensorNames;
+    List<DataItem> sensorNames;
 
     private SensorManager mSensorManager;
 
@@ -29,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
-        sensorNames = new String[sensorList.size()];
+        sensorNames = new ArrayList<DataItem>();
         for(int i = 0; i<sensorList.size(); i++){
-            sensorNames[i] = sensorList.get(i).getName();
+            sensorNames.add(new DataItem(i, sensorList.get(i).getName()));
 
         }
 

@@ -38,15 +38,8 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
     public void onBindViewHolder(DataItemAdapter.ViewHolder holder, int position) {
         final DataItem item = mItems.get(position);
 
-        try {
-            holder.tvName.setText(item.getItemName());
-            String imageFile = item.getImage();
-            InputStream inputStream = mContext.getAssets().open(imageFile);
-            Drawable d = Drawable.createFromStream(inputStream, null);
-            holder.imageView.setImageDrawable(d);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        holder.tvName.setText(item.getItemName());
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,14 +49,7 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
             }
         });
 
-        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(mContext, "You long clicked " + item.getItemName(),
-                        Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+
     }
 
     @Override
@@ -74,13 +60,11 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvName;
-        public ImageView imageView;
         public View mView;
         public ViewHolder(View itemView) {
             super(itemView);
 
             tvName = (TextView) itemView.findViewById(R.id.itemNameText);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView);
             mView = itemView;
         }
     }
