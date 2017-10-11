@@ -15,7 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".model.SensorOutput"></activity>
+        <activity android:name=".SensorOutput"
+            android:label="Sensor Output"/>
+        <activity android:name=".Light_Sensor"
+            android:label="Light Sensor"/>
+        <activity android:name=".MovingPhone"
+            android:label="Moving Phone"/>
+        <activity android:name=".EnvironmentNoise"
+            android:label="Environmental Noise"></activity>
     </application>
 
 </manifest>
