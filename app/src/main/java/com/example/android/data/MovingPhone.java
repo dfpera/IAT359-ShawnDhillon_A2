@@ -93,12 +93,17 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
         {
             accel_vals = event.values;
 
-            //If values are between these number set boolean am i to true
+            // Device is flat, do stuff
             if(accel_vals[0] < 0.3 && accel_vals[1] < 0.3 && accel_vals[2] > 9.7 && !ami){
                 ami = true;
+                // TODO: PLACE VIBRATION CODE HERE
+                // TODO: Using vibrator variable v to check if a vibrator exists using v.hasVibrator()
+                // TODO: If vibrator exists use v.vibrate(length in ms) for 5 seconds and display a toast saying "Device is flat"
+                // TODO: Else display a toast "No Vibrator - Device Flat"
                 Toast.makeText(MovingPhone.this, "Device is Flat", Toast.LENGTH_SHORT).show();
+                // TODO: FINISHED VIBRATION
 
-
+            // Device is no longer flat, reset boolean
             } else if(((accel_vals[0] > 3.0 || accel_vals[1] > 3.0) && accel_vals[2] < 8.0) && ami){
                 //if not moving display toast that device is flat and vibrate.
                 ami = false;
