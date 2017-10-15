@@ -21,7 +21,8 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
     private Button backtohome, amiMovingNow;
 
     //boolean variable to check status
-    boolean ami = false;
+    boolean ami = false; // Used for if device is flat
+    // TODO: Add another boolean variable for movement since ami is now used for if device is flat
     //Used for vibrating sensor
     Context context = this;
 
@@ -109,6 +110,8 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
                 ami = false;
 
             }
+
+            // TODO: Implement movement dampening, we'll do this on Monday
         }
 
 
