@@ -37,15 +37,12 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
     float[] accel_vals = new float[3];
 
     // declare vibrator sensor
-    private Vibrator v;
+    Vibrator v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moving_phone);
-
-        //assign and set up vibration sensor
-        v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
 
         //Set text view which will show status
         immovingText = (TextView)findViewById(R.id.immoving);
@@ -100,9 +97,23 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
                 // TODO: PLACE VIBRATION CODE HERE
                 // TODO: Using vibrator variable v to check if a vibrator exists using v.hasVibrator()
                 // TODO: If vibrator exists use v.vibrate(length in ms) for 5 seconds and display a toast saying "Device is flat"
-                // TODO: Else display a toast "No Vibrator - Device Flat"
-                Toast.makeText(MovingPhone.this, "Device is Flat", Toast.LENGTH_SHORT).show();
-                // TODO: FINISHED VIBRATION
+                v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                if(v.hasVibrator()) {
+                    // Vibrate for 5000 milliseconds
+                    v.vibrate(5000);
+
+                    Toast.makeText(MovingPhone.this, "Device is Flat", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    // TODO: Else display a toast "No Vibrator - Device Flat"
+                    Toast.makeText(MovingPhone.this, "No Vibrator - Device is Flat", Toast.LENGTH_SHORT).show();
+                    // TODO: FINISHED VIBRATION
+                }
+
+
+
 
             // Device is no longer flat, reset boolean
             } else if(((accel_vals[0] > 3.0 || accel_vals[1] > 3.0) && accel_vals[2] < 8.0) && ami){
