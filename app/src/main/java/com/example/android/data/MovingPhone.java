@@ -23,6 +23,10 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
     //boolean variable to check status
     boolean ami = false; // Used for if device is flat
     // TODO: Add another boolean variable for movement since ami is now used for if device is flat
+    boolean isMoving = false;
+    float movement;
+    float movementLast;
+    float dampening;
     //Used for vibrating sensor
     Context context = this;
 
@@ -49,6 +53,10 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
 
         //get reference to sensor and attach a listene
         SensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        movement = SensorManager.GRAVITY_EARTH;
+        movementLast = SensorManager.GRAVITY_EARTH;
+        dampening = 0.0f;
 
         //get reference to the accelerometer sensor
         myAccelerometer = SensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -123,6 +131,20 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
             }
 
             // TODO: Implement movement dampening, we'll do this on Monday
+
+            movementLast = movement;
+            movement = (float) Math.sqrt (accel_vals[0] * accel_vals[0]+ accel_vals[1] * accel_vals[1] + accel_vals[2] * accel_vals[2]);
+            float diff = movement - movementLast;
+            dampening = dampening * 0.95f + diff;
+
+            if(dampening > 0.2){
+                isMoving = true;
+
+            }
+
+            else if(dampening < 3){
+                isMoving = false;
+            }
         }
 
 
@@ -141,7 +163,7 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
         }
         // if check status button is pressed, set text in text view to moving if true and not moving if false.
         else if(v.getId() == R.id.amimovingnow){
-            if(ami == true){
+            if(isMoving){
                 immovingText.setText("You're Moving");
             }else{
                 immovingText.setText("You're Not Moving");

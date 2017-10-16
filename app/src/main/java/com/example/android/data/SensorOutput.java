@@ -23,7 +23,7 @@ public class SensorOutput extends AppCompatActivity implements SensorEventListen
 
     TextView sensorVal, sensorInfo;
     SensorManager mSensorManager;
-    Sensor myAccelerometer = null;
+    Sensor sensor = null;
     List<Sensor> sensorList;
 
     float[] accel_vals = new float[3];
@@ -40,14 +40,25 @@ public class SensorOutput extends AppCompatActivity implements SensorEventListen
         sensorVal = (TextView)findViewById(R.id.sensorVal);
         sensorInfo = (TextView)findViewById(R.id.sensorInfo);
 
-        sensorList.get(getIntent().getExtras().getInt("sensorKey")).getType();
+        sensor = mSensorManager.getDefaultSensor(sensorList.get(getIntent().getExtras().getInt("sensorKey")).getType());
+
+        String stringBuffer =
+                "name=\"" + sensor.getName() + "\"\n" +
+                        "vendor=\"" + sensor.getVendor() + "\"\n" +
+                        "version=\"" + sensor.getVersion() + "\"\n" +
+                        "type=\"" + sensor.getType() + "\"\n" +
+                        "maxRange=\"" + sensor.getMaximumRange() + "\"\n" +
+                        "resolution=\"" + sensor.getResolution() + "\"\n" +
+                        "power=\"" + sensor.getPower() + "\"\n" +
+                        "minDelay=\"" + sensor.getMinDelay() + "\"\n";
+        sensorInfo.setText(stringBuffer);
 
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        mSensorManager.registerListener(this, myAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
     }
 
@@ -59,6 +70,12 @@ public class SensorOutput extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        float[] values = event.values;
+        String NUM = "";
+        for(int i = 0; i<values.length; i++){
+            NUM += Float.toString(values[i])+ ",";
+        }
+        sensorVal.setText(NUM);
 
     }
 
