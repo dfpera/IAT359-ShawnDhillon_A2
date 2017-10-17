@@ -20,9 +20,11 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements  View.OnClickListener  {
-
+    //Create a list of sensors
     List<Sensor> sensorList;
+    //Create a list of sensor names
     List<DataItem> sensorNames;
+
     Button lightSensor, movement, environmentNoise;
 
     private SensorManager mSensorManager;
@@ -31,18 +33,22 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Access Sensor Manager
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        //Get list of sensors
         sensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+        //Create buttons for each actvity
         lightSensor =(Button)findViewById(R.id.lightSensor);
         movement =(Button)findViewById(R.id.movement);
         environmentNoise =(Button)findViewById(R.id.environmentNoise);
-
+        //Create an Arraylist with type Data Item
         sensorNames = new ArrayList<DataItem>();
         for(int i = 0; i<sensorList.size(); i++){
             sensorNames.add(new DataItem(i, sensorList.get(i).getName()));
 
         }
 
+        //set click listeners for the buttons
         lightSensor.setOnClickListener(this);
         movement.setOnClickListener(this);
         environmentNoise.setOnClickListener(this);

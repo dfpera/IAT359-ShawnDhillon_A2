@@ -22,12 +22,11 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
 
     //boolean variable to check status
     boolean ami = false; // Used for if device is flat
-    // TODO: Add another boolean variable for movement since ami is now used for if device is flat
     boolean isMoving = false;
+    //variables for dampening function
     float movement;
     float movementLast;
     float dampening;
-    //Used for vibrating sensor
     Context context = this;
 
     //Text view for showing status
@@ -51,9 +50,9 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
         //Set text view which will show status
         immovingText = (TextView)findViewById(R.id.immoving);
 
-        //get reference to sensor and attach a listene
+        //get reference to sensor
         SensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
+        //Intialize values for dampening function
         movement = SensorManager.GRAVITY_EARTH;
         movementLast = SensorManager.GRAVITY_EARTH;
         dampening = 0.0f;
@@ -99,13 +98,12 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
         {
             accel_vals = event.values;
 
-            // Device is flat, do stuff
+            // Device is flat, begin vibration
             if(accel_vals[0] < 0.3 && accel_vals[1] < 0.3 && accel_vals[2] > 9.7 && !ami){
                 ami = true;
-                // TODO: PLACE VIBRATION CODE HERE
-                // TODO: Using vibrator variable v to check if a vibrator exists using v.hasVibrator()
-                // TODO: If vibrator exists use v.vibrate(length in ms) for 5 seconds and display a toast saying "Device is flat"
+
                 v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                // Using vibrator variable v to check if a vibrator exists
 
                 if(v.hasVibrator()) {
                     // Vibrate for 5000 milliseconds
@@ -115,7 +113,7 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
 
                 }
                 else {
-                    // TODO: Else display a toast "No Vibrator - Device Flat"
+                    //Else display a toast "No Vibrator - Device Flat"
                     Toast.makeText(MovingPhone.this, "No Vibrator - Device is Flat", Toast.LENGTH_SHORT).show();
                     // TODO: FINISHED VIBRATION
                 }
@@ -130,7 +128,7 @@ public class MovingPhone extends AppCompatActivity implements View.OnClickListen
 
             }
 
-            // TODO: Implement movement dampening, we'll do this on Monday
+            // A dampening function to determine whether device is moving
 
             movementLast = movement;
             movement = (float) Math.sqrt (accel_vals[0] * accel_vals[0]+ accel_vals[1] * accel_vals[1] + accel_vals[2] * accel_vals[2]);

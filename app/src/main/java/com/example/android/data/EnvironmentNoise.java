@@ -61,7 +61,7 @@ public class EnvironmentNoise extends AppCompatActivity implements  View.OnClick
             startActivity(intent);
 
         }
-        //if its the check noise button
+        //if its the is noise button
         else if(v.getId() == R.id.isnoise){
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
