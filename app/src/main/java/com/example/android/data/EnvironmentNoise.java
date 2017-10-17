@@ -57,7 +57,7 @@ public class EnvironmentNoise extends AppCompatActivity implements  View.OnClick
         //Check what buton is pressed based on id.
         if(v.getId() == R.id.backtohome){
             //on press of button go to back page
-            Intent intent = new Intent(this, SensorOutput.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
         }
